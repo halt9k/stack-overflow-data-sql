@@ -3,16 +3,16 @@ CREATE DATABASE stats DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci
 
 USE stats;
 
--- DROP TABLE IF EXISTS badges;
--- DROP TABLE IF EXISTS comments;
--- DROP TABLE IF EXISTS post_history;
--- DROP TABLE IF EXISTS post_links;
--- DROP TABLE IF EXISTS post_types;
--- DROP TABLE IF EXISTS posts;
--- DROP TABLE IF EXISTS tags;
--- DROP TABLE IF EXISTS users;
--- DROP TABLE IF EXISTS vote_types;
--- DROP TABLE IF EXISTS votes;
+DROP TABLE IF EXISTS badges;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS post_history;
+DROP TABLE IF EXISTS post_links;
+DROP TABLE IF EXISTS post_types;
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS vote_types;
+DROP TABLE IF EXISTS votes;
 
 -- Badges
 CREATE TABLE badges (
@@ -152,121 +152,61 @@ CREATE TABLE votes (
 -- SHOW VARIABLES LIKE "secure_file_priv";
 
 -- Load Badges data
-LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Badges.xml' 
-INTO TABLE badges
-rows identified by '<row>';
+-- LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Badges.xml' 
+-- INTO TABLE badges
+-- rows identified by '<row>';
 
 -- SELECT * FROM badges;
 
 -- Load Comments data
-LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Comments.xml' 
-INTO TABLE comments
-rows identified by '<row>';
+-- LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Comments.xml' 
+-- INTO TABLE comments
+-- rows identified by '<row>';
 
 -- SELECT * FROM comments;
 -- SELECT COUNT(*) FROM comments;
 
 -- Load Post History data
-LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/PostHistory.xml' 
-INTO TABLE post_history
-rows identified by '<row>';
+-- LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/PostHistory.xml' 
+-- INTO TABLE post_history
+-- rows identified by '<row>';
 
 -- SELECT * FROM post_history;
 -- SELECT COUNT(*) FROM post_history;
 
 -- Load Post Links data
-LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/PostLinks.xml' 
-INTO TABLE post_links
-rows identified by '<row>';
+-- LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/PostLinks.xml' 
+-- INTO TABLE post_links
+-- rows identified by '<row>';
 
 -- SELECT * FROM post_links;
 
 -- Load Posts data
-LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Posts.xml'
-INTO TABLE posts
-rows identified by '<row>';
+-- LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Posts.xml'
+-- INTO TABLE posts
+-- rows identified by '<row>';
 
 -- SELECT * FROM posts;
 -- SELECT COUNT(*) FROM posts;
 
 -- Load Tags data
-LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Tags.xml' 
-INTO TABLE tags
-rows identified by '<row>';
+-- LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Tags.xml' 
+-- INTO TABLE tags
+-- rows identified by '<row>';
 
 -- SELECT * FROM tags;
 
 -- Load Users data
-LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Users.xml' 
-INTO TABLE users
-rows identified by '<row>';
+-- LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Users.xml' 
+-- INTO TABLE users
+-- rows identified by '<row>';
 
 -- SELECT * FROM users;
 
 -- Load Votes data
-LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Votes.xml' 
-INTO TABLE votes
-rows identified by '<row>';
+-- LOAD XML LOCAL INFILE 'd:\MIR\GitRepos\local\SQL/stats.stackexchange.com/Votes.xml' 
+-- INTO TABLE votes
+-- rows identified by '<row>';
 
 -- SELECT * FROM votes;
 -- SELECT COUNT(*) FROM votes;
-
--- -- Add Foreign Keys Next
-
-ALTER TABLE badges
-	ADD FOREIGN KEY (UserId) REFERENCES users(Id);
-    
-ALTER TABLE posts
-  	ADD FOREIGN KEY (PostTypeId) REFERENCES post_types(Id),
-  	ADD FOREIGN KEY (OwnerUserId) REFERENCES users(Id),
-  	ADD FOREIGN KEY (LastEditorUserId) REFERENCES users(Id);
-
-SET SQL_SAFE_UPDATES = 0;
-DELETE c FROM comments c LEFT JOIN users u ON c.UserId=u.Id WHERE u.Id IS NULL;
-SET SQL_SAFE_UPDATES = 1;
-
--- Couldn't execute the below query. Error code: 1206 - tried updating "innodb_buffer_pool_size = 999M"
--- in C:\ProgramData\MySQL\MySQL Server 8.0\my.ini - still no good.  
--- ALTER TABLE comments ADD FOREIGN KEY (PostId) REFERENCES posts(Id);
-
-ALTER TABLE comments  ADD FOREIGN KEY (UserId) REFERENCES users(Id);
-
--- Error Code: 1206
--- SET SQL_SAFE_UPDATES = 0;
--- DELETE v FROM votes AS v LEFT JOIN posts AS p ON v.PostId=p.Id WHERE p.Id IS NULL;
--- SET SQL_SAFE_UPDATES = 1;
-
--- Error Code: 1452
--- ALTER TABLE votes ADD FOREIGN KEY (PostId) REFERENCES posts(Id);
-
-ALTER TABLE votes ADD FOREIGN KEY (VoteTypeId) REFERENCES vote_types(Id);
-  
--- -- Create Views
-
-CREATE OR REPLACE VIEW Questions AS SELECT * FROM posts WHERE PostTypeId = 1;
-CREATE OR REPLACE VIEW Answers AS SELECT * FROM posts WHERE PostTypeId = 2;
-
--- SELECT * FROM Questions;
--- SELECT COUNT(*) FROM Questions;
--- SELECT COUNT(*) FROM Answers;
-
--- -- Create Indexes
-
-CREATE INDEX comments_idx_1 ON comments(PostId);
-CREATE INDEX comments_idx_2 ON comments(UserId);
-
-CREATE INDEX posts_idx_1 ON posts(AcceptedAnswerId);
-CREATE INDEX posts_idx_2 ON posts(ParentId);
-CREATE INDEX posts_idx_3 ON posts(OwnerUserId);
-CREATE INDEX posts_idx_4 ON posts(LastEditorUserId);
-CREATE INDEX posts_idx_5 ON posts(Tags);
-CREATE INDEX posts_idx_6 ON posts(PostTypeId);
-
-CREATE INDEX votes_idx_1 ON votes(PostId);
-
-
-
-
--- -- REFERENCES
-
--- https://meta.stackexchange.com/questions/2677/database-schema-documentation-for-the-public-data-dump-and-sede/2678#2678

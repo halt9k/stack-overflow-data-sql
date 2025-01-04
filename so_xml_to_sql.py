@@ -20,7 +20,7 @@ TABLE = ""
 def import_xml(engine, xml_file):
     df = pd.read_xml(xml_file, parser='etree')
     table_name = Path(xml_file).stem
-    df.to_sql(table_name, engine, if_exists="replace", index=False, chunksize=500000)
+    df.to_sql(table_name, engine, if_exists="append", index=False, chunksize=500000)
 
     print(f"Data loaded into table '{table_name}'")
 
@@ -38,6 +38,7 @@ def import_so_xmls(engine):
 
 
 def create_index(engine):
+
     pass
 
 

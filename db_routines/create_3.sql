@@ -1,6 +1,17 @@
 -- Example of schema 
 -- The schema does not include any indexes ( except PK's )
 
+DROP TABLE IF EXISTS badges;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS post_history;
+DROP TABLE IF EXISTS post_links;
+DROP TABLE IF EXISTS post_types;
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS vote_types;
+DROP TABLE IF EXISTS votes;
+
 -- Users
 CREATE TABLE users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
