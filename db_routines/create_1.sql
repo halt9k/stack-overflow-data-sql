@@ -1,12 +1,33 @@
 -- Source:
 -- https://github.com/leerssej/SEDESchema/blob/master/info_schema_create_tables.sql
 
+--create database SO on (name='SO', filename='**\SO.db')
+
 DROP TABLE IF EXISTS Badges;
+DROP TABLE IF EXISTS CloseAsOffTopicReasonTypes;
+DROP TABLE IF EXISTS CloseReasonTypes;
 DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS FlagTypes;
+DROP TABLE IF EXISTS PendingFlags;
+DROP TABLE IF EXISTS PostFeedback;
 DROP TABLE IF EXISTS PostHistory;
+DROP TABLE IF EXISTS PostHistoryTypes;
 DROP TABLE IF EXISTS PostLinks;
+DROP TABLE IF EXISTS PostNoticeTypes;
+DROP TABLE IF EXISTS PostNotices;
+DROP TABLE IF EXISTS PostTags;
 DROP TABLE IF EXISTS PostTypes;
 DROP TABLE IF EXISTS Posts;
+DROP TABLE IF EXISTS PostsWithDeleted;
+DROP TABLE IF EXISTS ReviewRejectionReasons;
+DROP TABLE IF EXISTS ReviewTaskResultTypes;
+DROP TABLE IF EXISTS ReviewTaskResults;
+DROP TABLE IF EXISTS ReviewTaskStates;
+DROP TABLE IF EXISTS ReviewTaskTypes;
+DROP TABLE IF EXISTS ReviewTasks;
+DROP TABLE IF EXISTS SuggestedEditVotes;
+DROP TABLE IF EXISTS SuggestedEdits;
+DROP TABLE IF EXISTS TagSynonyms;
 DROP TABLE IF EXISTS Tags;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS VoteTypes;
